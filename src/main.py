@@ -26,10 +26,6 @@ def is_cyrillic(name_item: str) -> bool:
     """Проверка на вхождение кириллицы в строку"""
     return bool(re.search('[а-яА-Я]', name_item))
 
-def is_english(name_item: str) -> bool:
-    """Проверка на вхождение кириллицы в строку"""
-    return bool(re.search('[a-zA-Z]', name_item))
-
 
 def filter_russian_list(names_list: list) -> list:
     """Фильтрация имен написанных на русском"""
@@ -41,13 +37,17 @@ def filter_russian_list(names_list: list) -> list:
 
 
 def filter_english_list(names_list: list) -> list:
-    """Фильтрация имен написанных на русском"""
+    """Фильтрация имен написанных на английском"""
     new_names_list = list()
     for name_item in names_list:
-        if is_english(name_item):
+        if not is_cyrillic(name_item):
             new_names_list.append(name_item)
     return new_names_list
 
+def save_to_file(file_name: str, data: str) -> None:
+    """Сохраняет данные в файл"""
+    with open('data/' + file_name, 'w') as names_file:
+        names_file.write(data)
 
 if __name__ == "__main__":
     cleared_names = clear_names('names.txt')
@@ -63,6 +63,6 @@ if __name__ == "__main__":
             g.writelines(f"{item}\n" for item in filter_russian_list(cleared_names))
 
     for i in cleared_names:
-        new_file_path = os.path.join(main_dir, '..', 'data', 'eglish_names.txt')
+        new_file_path = os.path.join(main_dir, '..', 'data', 'english_names.txt')
         with open(new_file_path, 'w') as g:
             g.writelines(f"{item}\n" for item in filter_english_list(cleared_names))
