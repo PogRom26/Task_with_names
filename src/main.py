@@ -22,5 +22,16 @@ def clear_names(file_name: str) -> list:
 if __name__ == "__main__":
     cleared_names = clear_names('names.txt')
 
+    import os
+
+    # Получаем путь к папке, где лежит сам скрипт
+    main_dir = os.path.dirname(__file__)
+    # Строим полный путь к файлу
+    new_file_path = os.path.join(main_dir, '..', 'data', 'names_clean_list.txt')
+
+
     for i in cleared_names:
-        print(i)
+        with open(new_file_path, 'w') as f:
+            f.writelines(f"{item}\n" for item in cleared_names)
+
+        #print(i)
