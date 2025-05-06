@@ -1,5 +1,6 @@
 import os
 import re
+# проверочный коммент
 
 main_dir = os.path.dirname(__file__)
 
